@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Video Frame Extraction Presentation</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #ffffff;
+      color: #000000;
+      overflow: hidden;
+    }
+    .slide {
+      display: none;
+      padding: 40px 60px;
+      height: 100vh;
+      width: 100vw;
+      position: absolute;
+      top: 0;
+      left: 0;
+      overflow-y: auto;
+      background-color: #ffffff;
+      color: #000000;
+      transition: opacity 0.6s ease;
+      flex-direction: column;
+    }
+    .slide.active {
+      display: flex;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateX(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    h1, h2 {
+      text-align: center;
+      margin: 0 0 20px 0;
+      color: #001f3f;
+    }
+    h1 {
+      font-size: 2.8em;
+      line-height: 1.2;
+      font-weight: 700;
+    }
+    h2 {
+      font-size: 2.2em;
+      margin-bottom: 15px;
+      font-weight: 700;
+    }
+    p, li, pre {
+      font-size: 1.2em;
+      line-height: 1.6em;
+      white-space: pre-wrap;
+      color: #000000;
+      margin-bottom: 12px;
+    }
+    ul, ol {
+      margin: 0 0 20px 30px;
+      padding: 0;
+      color: #000000;
+    }
+    ul li, ol li {
+      margin-bottom: 10px;
+    }
+    pre {
+      background: none;
+      border: none;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+      color: #000000;
+    }
+    .columns {
+      display: flex;
+      gap: 40px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    .column {
+      flex: 1;
+      min-width: 300px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      color: #000000;
+      font-size: 1.1em;
+    }
+    th, td {
+      border: 1px solid #666;
+      padding: 10px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background-color: #ddd;
+      font-weight: 700;
+      color: #001f3f;
+    }
+    .circle {
+      position: absolute;
+      top: 10px;
+      right: 30px;
+      background-color: #001f3f;
+      color: #ffffff;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 1.3em;
+      user-select: none;
+    }
+    .thankyou {
+      font-size: 4em;
+      text-align: center;
+      margin-top: 20vh;
+      color: #001f3f;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+    .credit {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 1.4em;
+      font-weight: 500;
+      color: #001f3f;
+    }
+    .slide1-content {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 30px;
+    }
+    .vertical-columns {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    .box {
+      border: 2px solid #001f3f;
+      border-radius: 12px;
+      padding: 25px 30px;
+      background-color: #f0f8ff;
+      color: #001f3f;
+      box-shadow: 0 4px 10px rgba(0, 31, 63, 0.15);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Slide 1 -->
+  <div class="slide active">
+    <div class="circle">1</div>
+    <div class="slide1-content">
+      <h1>Video Frame Extraction and Segmentation for Real-Time Object Analysis</h1>
+    </div>
+  </div>
+
+  <!-- Slide 2 -->
+  <div class="slide">
+    <div class="circle">2</div>
+    <div class="vertical-columns">
+      <div class="box">
+        <h2>Problem</h2>
+        <p>Videos contain lots of information but are hard to analyze manually. Detecting and identifying objects in videos automatically is challenging, especially in real-time. Also, linking detected objects to online shopping options is not widely available.</p>
+      </div>
+      <div class="box">
+        <h2>Solution</h2>
+        <p>A system that extracts frames from videos, uses deep learning (YOLOv8n) to detect and segment objects, and automatically generates product search links for detected items.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 3: Combined Aim and Objectives -->
+  <div class="slide">
+    <div class="circle">3</div>
+    <div class="vertical-columns">
+      <div class="box">
+        <h2>Aim</h2>
+        <p>To create an automated system that processes video frames, detects objects accurately, and helps users find related products online quickly.</p>
+      </div>
+      <div class="box">
+        <h2>Objectives</h2>
+        <ul>
+          <li>To extract frames from real-time or pre-recorded video at a defined frame rate.</li>
+          <li>To apply object detection and segmentation models to identify objects in each frame.</li>
+          <li>To filter and list unique objects detected across the video.</li>
+          <li>To generate automated purchase/search links for detected products using online platforms like Amazon.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 4 -->
+  <div class="slide">
+    <div class="circle">4</div>
+    <div class="vertical-columns">
+      <div class="box">
+        <h2>Motivation</h2>
+        <p>Videos are everywhere—from social media to surveillance—and contain valuable objects and products.</p>
+        <p>Manual object tagging is slow and not practical.</p>
+        <p>Enabling users to interact with and purchase products detected in video content (e.g., clothes, electronics) can revolutionize e-commerce by linking visual media directly to product discovery.</p>
+        <p>Linking objects in videos to shopping platforms enhances user experience and creates new e-commerce opportunities.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Slide 5 -->
+  <div class="slide">
+    <div class="circle">5</div>
+    <h2>Literature Review</h2>
+    
+    <table>
+      <thead>
+        <tr>
+          <th><strong>Concepts</strong></th>
+          <th><strong>Reference</strong></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Object detection builds on image segmentation and feature extraction from images.</td>
+          <td><em>Object detection in real-time video surveillance using attention mechanism and Transformer-based detection head,</em> 2025.</td>
+        </tr>
+        <tr>
+          <td>YOLOv8n is chosen because it is lightweight, fast (can handle real-time), and accurate enough for many practical uses.</td>
+          <td>1.Sung, T.-W. et al., <em>Improvement of YOLOv8 Object Detection Based on Lightweight Neck Model for Complex Images,</em> 2025.<br><strong></strong> <em>The evolution of object detection methods: Performance improvements with YOLOv8,</em> 2025.</td>
+        </tr>
+        <tr>
+          <td>Deep learning models learn features automatically, unlike traditional manual filters, making them powerful for complex video scenes.</td>
+          <td><em>1.SO-YOLOv8: A novel deep learning-based approach for small object detection,</em> 2025.<br><strong></strong>2.H. Jain et al., <em>YOLOv8 and its Advancements,</em> IJRP Reviews, 2025.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table style="margin-top: 30px;">
+      <thead>
+        <tr>
+          <th><strong>YOLO Version</strong></th>
+          <th><strong>Speed</strong> </th>
+          <th><strong>Accuracy</strong> </th>
+          <th><strong>Use Case</strong></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>YOLOv3</strong></td>
+          <td>Fast</td>
+          <td>Moderate</td>
+          <td>Real-time detection with decent accuracy. Good for general use on limited hardware.</td>
+        </tr>
+        <tr>
+          <td><strong>YOLOv4</strong></td>
+          <td>Medium</td>
+          <td>High</td>
+          <td>Balanced speed & accuracy. Works well for small objects.</td>
+        </tr>
+        <tr>
+          <td><strong>YOLOv5</strong></td>
+          <td> Fast</td>
+          <td>High</td>
+          <td>Flexible model sizes (Nano to XLarge). Good for deployment & custom training.</td>
+        </tr>
+        <tr>
+          <td><strong>YOLOv7</strong></td>
+          <td> Fast</td>
+          <td>Moderately High</td>
+          <td>Best real-time accuracy. Great on COCO dataset. Efficient architecture.</td>
+        </tr>
+        <tr>
+          <td><strong>YOLOv8</strong></td>
+          <td>Fast</td>
+          <td>Very High</td>
+          <td>Latest features, strong on custom datasets. Modern design with highest accuracy.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- New Slide 6: Literature Review - Concepts & YOLO Version -->
+  <div class="slide">
+    <div class="circle">6</div>
+    <h2>Literature Review</h2>
+    <table>
+      <tr>
+        <th>Existing Systems</th>
+        <th>This Project (Unique Features)</th>
+      </tr>
+      <tr>
+        <td>Works on single images or snapshots</td>
+        <td>Processes entire videos automatically by extracting frames</td>
+      </tr>
+      <tr>
+        <td>Requires manual user input to upload or capture image</td>
+        <td>Fully automated frame extraction and object detection</td>
+      </tr>
+      <tr>
+        <td>Detects one main object per image</td>
+        <td>Detects multiple objects across multiple frames</td>
+      </tr>
+      <tr>
+        <td>Focused mostly on image-based product search</td>
+        <td>Combines video processing with e-commerce product link generation</td>
+      </tr>
+    </table>
+  </div>
+  
+
+  <!-- Slide 7 -->
+    <div class="slide">
+    <div class="circle">7</div>
+    <h2>Methodology</h2>
+    <ol>
+      <li><strong>Frame Extraction</strong>
+        <br />
+        Input: Pre-recorded video (input_video.mp4).
+        <br />
+        Frames are extracted at 2 FPS using OpenCV.
+        <br />
+        Each frame is saved sequentially as an image file for further processing.
+      </li>
+      <li><strong>Object Detection</strong>
+        <br />
+        Model: YOLOv8n.pt from the Ultralytics YOLO library.
+        <br />
+        Each saved frame is passed to the YOLO model for detection.
+        <br />
+        Objects detected are collected across frames and filtered for uniqueness.
+        <br />
+        Detections are logged and stored in detected_objects.txt.
+      </li>
+      <li><strong>Product Link Generation</strong>
+        <br />
+        Each unique object is mapped to a product search query.
+        <br />
+        Example:
+        <pre>🔎 Bottle
+ - Amazon: https://www.amazon.com/s?k=bottle
+ - Flipkart: https://www.flipkart.com/search?q=bottle
+ - eBay: https://www.ebay.com/sch/i.html?_nkw=bottle
+ - Walmart: https://www.walmart.com/search?q=bottle</pre>
+      </li>
+    </ol>
+  </div>
+
+
+  <!-- Slide 8 -->
+  <div class="slide">
+    <div class="circle">8</div>
+    <h2>Results</h2>
+    <p>🎯 Unique objects detected in video:</p>
+    <ul>
+      <li>airplane</li>
+      <li>baseball bat</li>
+      <li>bottle</li>
+      <li>cell phone</li>
+      <li>dining table</li>
+      <li>donut</li>
+      <li>fork</li>
+      <li>person</li>
+      <li>refrigerator</li>
+      <li>remote</li>
+      <li>scissors</li>
+      <li>toothbrush</li>
+    </ul>
+    <p>✅ Saved detected objects to detected_objects.txt</p>
+    <p>🛒 Suggested Buy Links:</p>
+
+ <pre>🔎 Airplane
+ - Amazon: https://www.amazon.com/s?k=airplane
+ - Flipkart: https://www.flipkart.com/search?q=airplane
+ - eBay: https://www.ebay.com/sch/i.html?_nkw=airplane
+ - Walmart: https://www.walmart.com/search?q=airplane
+
+🔎 Baseball Bat
+ - Amazon: https://www.amazon.com/s?k=baseball+bat
+ - Flipkart: https://www.flipkart.com/search?q=baseball+bat
+ - eBay: https://www.ebay.com/sch/i.html?_nkw=baseball+bat
+ - Walmart: https://www.walmart.com/search?q=baseball+bat
+
+🔎 Bottle
+ - Amazon: https://www.amazon.com/s?k=bottle
+ - Flipkart: https://www.flipkart.com/search?q=bottle
+ - eBay: https://www.ebay.com/sch/i.html?_nkw=bottle
+ - Walmart: https://www.walmart.com/search?q=bottle
+
+🔎 Cell Phone
+ - Amazon: https://www.amazon.com/s?k=cell+phone
+ - Flipkart: https://www.flipkart.com/search?q=cell+phone
+ - eBay: https://www.ebay.com/sch/i.html?_nkw=cell+phone
+ - Walmart: https://www.walmart.com/search?q=cell+phone
+
+🔎 Dining Table
+ - Amazon: https://www.amazon.com/s?k=dining+table
+ - Flipkart: https://www.flipkart.com/search?q=dining+table
+ - eBay: https://www.ebay.com/sch/i.html?_nkw=dining+table
+ - Walmart: https://www.walmart.com/search?q=dining+table
+
+🔎 Donut
+ - Amazon: https://www.amazon.com/s?k=donut
+ - Flipkart: https://www.flipkart.com/search?q=donut
+ - eBay: https://www.ebay.com/sch/i.html?_nkw=donut
+ - Walmart: https://www.walmart.com/search?q=donut
+
+🔎 Fork
+ - Amazon: https://www.amazon.com/s?k=fork
+ - Flipkart: https://www.flipkart.com/search?q=fork
+ - eBay: https://www.ebay.com/sch/i.html?_nkw=fork
+ - Walmart: https://www.walmart.com/search?q=fork
+
+🔎 Refrigerator
+ - Amazon: https://www.amazon.com/s?k=refrigerator
+ - Flipkart: https://www.flipkart.com/search?q=refrigerator
+ - eBay: https://www.ebay.com/sch/i.html?_nkw=refrigerator
+ - Walmart: https://www.walmart.com/search?q=refrigerator
+
+🔎 Remote
+ - Amazon: https://www.amazon.com/s?k=remote
+ - Flipkart: https://www.flipkart.com/search?q=remote
+ - eBay: https://www.ebay.com/sch/i.html?_nkw=remote
+ - Walmart: https://www.walmart.com/search?q=remote
+
+🔎 Scissors
+ - Amazon: https://www.amazon.com/s?k=scissors
+ - Flipkart: https://www.flipkart.com/search?q=scissors
+ - eBay: https://www.ebay.com/sch/i.html?_nkw=scissors
+ - Walmart: https://www.walmart.com/search?q=scissors
+
+🔎 Toothbrush
+ - Amazon: https://www.amazon.com/s?k=toothbrush
+ - Flipkart: https://www.flipkart.com/search?q=toothbrush
+ - eBay: https://www.ebay.com/sch/i.html?_nkw=toothbrush
+ - Walmart: https://www.walmart.com/search?q=toothbrush</pre>
+  </div>
+
+  <!-- Slide 9 -->
+  <div class="slide">
+    <div class="circle">9</div>
+    <div class="vertical-columns">
+    <div class="box">
+    <h2>Conclusion</h2>
+    <p>This project successfully demonstrates an end-to-end pipeline for extracting video frames, detecting and analyzing objects using deep learning, and integrating the results with e-commerce functionality.</p>
+    <p>The approach is scalable and can be enhanced with more advanced models, real-time tracking, and API integration for live product search.</p>
+    <p>This system has potential applications in smart surveillance, interactive advertising, and automated content tagging for e-commerce platforms.</p>
+    </div>
+    </div>
+  </div>
+
+  <!-- Slide 10 -->
+  <div class="slide">
+    <div class="circle">10</div>
+    <div class="thankyou">Thank You</div>
+    <div class="credit">Project by Adil Dafedar</div>
+  </div>
+
+  <script>
+    let currentSlide = 1;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+
+    function showSlide(n) {
+      slides.forEach(slide => slide.classList.remove('active'));
+      slides[n - 1].classList.add('active');
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide % totalSlides) + 1;
+      showSlide(currentSlide);
+    }
+
+    function prevSlide() {
+      currentSlide = (currentSlide - 2 + totalSlides) % totalSlides + 1;
+      showSlide(currentSlide);
+    }
+
+    document.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        nextSlide();
+      }
+      if (e.key === 'ArrowLeft') {
+        prevSlide();
+      }
+    });
+
+    showSlide(currentSlide);
+  </script>
+</body>
+</html>
